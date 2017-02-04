@@ -61,23 +61,7 @@ def main(config_path):
             cleanwork(from_path,to_path,pattern,command,iscrawl)
             # print "File match %s has been moved from %s . "% (pattern,from_path)
 
+config_path = 'config.csv'
+
 if __name__ == '__main__':
-    config_path = 'config.csv'
     main(config_path)
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

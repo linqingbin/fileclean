@@ -107,6 +107,10 @@ class TestCase(unittest.TestCase):
         self.assertEqual(check_files(self.root_path),dir1_suppose_dict)
         self.assertEqual(check_files(self.to_path),dir2_suppose_dict)
 
+    def tearDown(self):
+        emptydir(self.root_path)
+        emptydir(self.to_path)
+
 if __name__ == '__main__':
     unittest.main()
 

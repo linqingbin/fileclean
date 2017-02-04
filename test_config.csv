@@ -1,0 +1,4 @@
+from_path,to_path,condition,command,iscrawl
+G:\Project\softclean\Testcase\case1,None,.*\.txt$,delete,1
+G:\Project\softclean\Testcase\case1,G:\Project\softclean\Testcase\case2,.*\.mkv$,move,0
+G:\Project\softclean\Testcase\case1,G:\Project\softclean\Testcase\case2,.*\.doc$,copy,1

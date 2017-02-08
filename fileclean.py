@@ -43,7 +43,7 @@ def cleanwork(from_path,to_path,pattern,command,iscrawl=False):
             if re.match(pattern,i):
                 if command == 'delete':
                     os.remove(filepath)
-                elif filepath not in to_path_file_list: # 处理移动类的指令
+                elif i not in to_path_file_list: # 处理移动类的指令
                     if command == 'move':
                         shutil.move(filepath,to_path)
                     elif command == 'copy':

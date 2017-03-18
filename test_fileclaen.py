@@ -8,7 +8,8 @@ import os
 import shutil
 import unittest
 import fileclean
-reload(fileclean)
+import importlib
+importlib.reload(fileclean)
 
 def make_files(file_dict,root_path):
     '''
@@ -56,7 +57,7 @@ def check_files(dir_path):
         return {}
     for file_name in filelist:
         filepath = dir_path+"/"+ file_name
-        file_name = file_name.decode('gbk')
+        file_name = file_name
         if os.path.isdir(filepath):
             file_dict[file_name] = check_files(filepath)
         else:
@@ -91,7 +92,7 @@ class TestCase(unittest.TestCase):
 
     def test_move(self):
         '''测试文件的遍历移动'''
-        dir1_init_dict = {'z.mkv':1,'l.mkv':1,'z.avi':1,'mkv.mkvv':1,'txt':{},'indoor':{'y.rar':1,'f.mkv':1}}
+        dir1_init_dict = {'tz.mkvz':1,'z.mkv':1,'l.mkv':1,'z.avi':1,'mkv.mkvv':1,'txt':{},'indoor':{'y.rar':1,'f.mkv':1}}
         dir2_suppose_dict = {'z.mkv':1,'l.mkv':1}
         make_files(dir1_init_dict,self.root_path)
         fileclean.main(self.config_path)

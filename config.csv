@@ -7,3 +7,4 @@ G:/技术/待处理文本,D:/档案馆/141104 文本遗产/技术,.*\.txt$,copy,0
 G:/爱好/待处理文本,D:/档案馆/141104 文本遗产/爱好,.*\.txt$,copy,0
 G:/哲学/待处理文本,D:/档案馆/141104 文本遗产/哲学,.*\.txt$,copy,0
 G:\Project,None,.*\.pyc$,delete,1
+C:\Python\pscript,None,.*\.pyc$,delete,0

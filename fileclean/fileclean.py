@@ -1,5 +1,5 @@
 #-*-coding:utf-8-*-
-u'''
+'''
 Date:20170116
 Author:linqingbin
 Description:文件清理
@@ -38,7 +38,6 @@ def cleanwork(from_path,to_path,pattern,command,iscrawl=False):
     for i in filelist:
         filepath = from_path+"/"+i
         if os.path.isdir(filepath) and bool(int(iscrawl)): # 处理对文件夹的递归问题
-            # print("%s is crawled!" % filepath)
             cleanwork(filepath,to_path,pattern,command,iscrawl)
         else:
             if re.match(pattern,i):
@@ -51,6 +50,7 @@ def cleanwork(from_path,to_path,pattern,command,iscrawl=False):
                         shutil.move(filepath,to_path)
                     elif command == 'copy':
                         shutil.copy(filepath,to_path)
+                print("{0} To {1} {2} done".format(filepath,to_path,command))
 
 def main(config_path):
     with open(config_path,'r') as f:
@@ -60,12 +60,9 @@ def main(config_path):
         if len(work) == 5:
             from_path,to_path,pattern,command,iscrawl = work
             cleanwork(from_path,to_path,pattern,command,iscrawl)
-            # print("File match %s has been moved from %s to %s. "% (pattern,from_path,to_path))
-
-config_path = 'config.csv'
 
 if __name__ == '__main__':
+    config_path = 'config/config.csv'
     print('file start!')
     main(config_path)
     print('file end!')
-    time.sleep(3)

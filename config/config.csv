@@ -1,0 +1,5 @@
+from_path,to_path,condition,command,iscrawl
+D:/软件区,None,.*\.torrent$,delete,0
+D:/软件区,D:/动画区,.*\.(mp4|mkv|avi)$,move,0
+G:\Project,None,.*\.pyc$,delete,1
+C:/Users/wza64/Desktop,F:\Knowledge\texts,.*\.txt$,move,0

@@ -10,7 +10,7 @@ import re
 import time
 import shutil
 
-def cleanwork(from_path,to_path,pattern,command,iscrawl=False):
+def cleanwork(from_path,to_path,pattern,command,iscrawl=False,iter_times=0):
     '''
     清理指定文件夹的文件
 
@@ -31,14 +31,19 @@ def cleanwork(from_path,to_path,pattern,command,iscrawl=False):
     -------
     None
     '''
-    filelist = os.listdir(from_path)
+    try:
+        filelist = os.listdir(from_path)
+    except:
+        return None
     to_path_file_list = []
     if command in ('move','copy'):
         to_path_file_list = os.listdir(to_path)
     for i in filelist:
         filepath = from_path+"/"+i
-        if os.path.isdir(filepath) and bool(int(iscrawl)): # 处理对文件夹的递归问题
-            cleanwork(filepath,to_path,pattern,command,iscrawl)
+        if os.path.isdir(filepath) and bool(int(iscrawl)) and iter_times < 10: # 处理对文件夹的递归问题
+            iter_times += 1
+            print(filepath,iter_times)
+            cleanwork(filepath,to_path,pattern,command,iscrawl,iter_times)
         else:
             if re.match(pattern,i):
                 if command == 'delete':
@@ -62,7 +67,7 @@ def main(config_path):
             cleanwork(from_path,to_path,pattern,command,iscrawl)
 
 if __name__ == '__main__':
-    config_path = 'config/config.csv'
+    config_path = 'config.csv'
     print('file start!')
     main(config_path)
     print('file end!')

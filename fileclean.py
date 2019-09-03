@@ -4,13 +4,14 @@ Date:20170116
 Author:linqingbin
 Description:文件清理
 '''
-
+import time
 import os
 import re
-import time
 import shutil
+import logging
 
-def cleanwork(from_path,to_path,pattern,command,iscrawl=False,iter_times=0):
+
+def cleanwork(from_path, to_path, pattern, command, iscrawl=False, iter_times=0):
     '''
     清理指定文件夹的文件
 
@@ -33,41 +34,44 @@ def cleanwork(from_path,to_path,pattern,command,iscrawl=False,iter_times=0):
     '''
     try:
         filelist = os.listdir(from_path)
-    except:
+    except Exception:
+        # print("Open %s error." % from_path)
         return None
     to_path_file_list = []
-    if command in ('move','copy'):
+    if command in ('move', 'copy'):
         to_path_file_list = os.listdir(to_path)
     for i in filelist:
-        filepath = from_path+"/"+i
-        if os.path.isdir(filepath) and bool(int(iscrawl)) and iter_times < 10: # 处理对文件夹的递归问题
+        filepath = from_path + "/" + i
+        if os.path.isdir(filepath) and bool(int(iscrawl)) and iter_times < 10:  # 处理对文件夹的递归问题
             iter_times += 1
-            print(filepath,iter_times)
-            cleanwork(filepath,to_path,pattern,command,iscrawl,iter_times)
+            # print(filepath, iter_times)
+            cleanwork(filepath, to_path, pattern, command, iscrawl, iter_times)
         else:
-            if re.match(pattern,i):
+            if re.match(pattern, i):
                 if command == 'delete':
                     os.remove(filepath)
-                elif i in to_path_file_list: # 处理移动类的指令
+                elif i in to_path_file_list:  # 处理移动类的指令
                     continue
                 else:
                     if command == 'move':
-                        shutil.move(filepath,to_path)
+                        shutil.move(filepath, to_path)
                     elif command == 'copy':
-                        shutil.copy(filepath,to_path)
-                print("{0} To {1} {2} done".format(filepath,to_path,command))
+                        shutil.copy(filepath, to_path)
+                # print("{0} To {1} {2} done".format(filepath, to_path, command))
+
 
 def main(config_path):
-    with open(config_path,'r') as f:
+    with open(config_path, 'r') as f:
         config = f.read()
     works = [x.split(',') for x in config.split('\n')][1:]  # 获取任务
     for work in works:  # 逐个执行任务
         if len(work) == 5:
-            from_path,to_path,pattern,command,iscrawl = work
-            cleanwork(from_path,to_path,pattern,command,iscrawl)
+            from_path, to_path, pattern, command, iscrawl = work
+            cleanwork(from_path, to_path, pattern, command, iscrawl)
+
 
 if __name__ == '__main__':
     config_path = 'config.csv'
-    print('file start!')
     main(config_path)
-    print('file end!')
+    with open("records.txt", "w") as f:
+        f.write(time.ctime())

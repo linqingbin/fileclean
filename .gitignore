@@ -1,6 +1,7 @@
 
 tests
 __pycache__
-config.csv
+tasks.csv
 *.cache
 *.pyw
+*.log
